@@ -1,0 +1,15 @@
+services:
+  test-payment-sse-database:
+    container_name: "test-payment-sse-database"
+    image: postgres:alpine
+    restart: always
+    environment:
+      - POSTGRES_HOST=test-payment-sse-database
+      - POSTGRES_PORT=12586
+      - POSTGRES_USER=test
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_DB=test
+      - POSTGRES_MODE=disable
+    ports:
+      - "12586:12586"
+    command: -p 12586

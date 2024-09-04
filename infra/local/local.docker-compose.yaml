@@ -1,0 +1,29 @@
+services:
+  payment-sse-server:
+    container_name: "payment-sse-server"
+    build:
+      context: ../..
+      dockerfile: ./infra/local/local.Dockerfile
+    env_file:
+      - ../../.env
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+  payment-sse-database:
+    container_name: "payment-sse-database"
+    image: postgres:alpine
+    restart: always
+    environment:
+      - POSTGRES_HOST=payment-sse-database
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_MODE=disable
+    ports:
+      - "5432:5432"
+    volumes:
+      - payment-sse-data:/var/lib/postgresql/data
+
+volumes:
+  payment-sse-data:
